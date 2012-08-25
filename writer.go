@@ -1,33 +1,32 @@
+// Package counting provides wrappers to add counting to io.Reader and io.Writer.
 package counting
 
 import "io"
 
 type Writer struct {
-	w io.Writer
-	c int
+	writer io.Writer
+	count  int
 }
 
-func NewWriter(w io.Writer) (h *Writer) {
-	h = new(Writer)
-	h.w = w
-	h.c = 0
-	return
+// Wrap an existing wrapper to track byte write count.
+func NewWriter(writer io.Writer) *Writer {
+	return &Writer{writer: writer}
 }
 
+// Proxies to the underlying writer.
 func (h *Writer) Write(p []byte) (n int, err error) {
-	n, err = h.w.Write(p)
-	h.c += n
+	n, err = h.writer.Write(p)
+	h.count += n
 	return
 }
 
-// Count: returns the total number of bytes that were 
-// written to the underlying writer since the last call 
-// to Clear
+// Returns the total number of bytes that were written to the
+// underlying writer since the last call to Clear.
 func (h *Writer) Count() int {
-	return h.c
+	return h.count
 }
 
-// Clear: zeroes the write byte counter
+// Zeroes the byte write counter.
 func (h *Writer) Clear() {
-	h.c = 0
+	h.count = 0
 }
