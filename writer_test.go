@@ -3,8 +3,9 @@ package counting_test
 import (
 	"bytes"
 	"fmt"
-	"github.com/daaku/go.counting"
 	"testing"
+
+	"github.com/ParsePlatform/go.counting"
 )
 
 func TestWriter(t *testing.T) {
