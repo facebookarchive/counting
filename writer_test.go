@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/ParsePlatform/go.counting"
+	"github.com/facebookgo/counting"
 )
 
 func TestWriter(t *testing.T) {
