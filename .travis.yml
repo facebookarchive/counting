@@ -13,8 +13,8 @@ before_install:
   - go get -v code.google.com/p/go.tools/cmd/cover
 
 install:
-  - go get -race -t -v ./...
   - go install -race -v std
+  - go get -race -t -v ./...
   - go install -race -v ./...
 
 script:
