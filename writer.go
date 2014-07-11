@@ -3,30 +3,31 @@ package counting
 
 import "io"
 
+// Writer provides out of band access to the number of bytes written.
 type Writer struct {
 	writer io.Writer
 	count  int
 }
 
-// Wrap an existing wrapper to track byte write count.
+// NewWriter wraps an existing writer to track byte write count.
 func NewWriter(writer io.Writer) *Writer {
 	return &Writer{writer: writer}
 }
 
-// Proxies to the underlying writer.
+// Write proxies to the underlying writer.
 func (h *Writer) Write(p []byte) (n int, err error) {
 	n, err = h.writer.Write(p)
 	h.count += n
 	return
 }
 
-// Returns the total number of bytes that were written to the
-// underlying writer since the last call to Clear.
+// Count returns the total number of bytes that were written to the underlying
+// writer since the last call to Clear.
 func (h *Writer) Count() int {
 	return h.count
 }
 
-// Zeroes the byte write counter.
+// Clear zeroes the byte write counter.
 func (h *Writer) Clear() {
 	h.count = 0
 }
